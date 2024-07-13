@@ -19,6 +19,56 @@
     }
   ],
   "paths": {
+    "/integration/visit/{id}/make-visible": {
+      "put": {
+        "operationId": "VisitController_turnHiddenLegacyVisitIntoVisible",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MakeVisitVisibleOutputDto"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/MakeVisitVisibleOutputDto"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "visit"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
     "/plants": {
       "get": {
         "description": "Teste 123",
