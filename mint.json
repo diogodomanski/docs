@@ -81,6 +81,12 @@
         "api-reference/endpoint/create",
         "api-reference/endpoint/delete"
       ]
+    },
+    {
+      "group": "Visitas",
+      "pages": [
+        "api-reference/endpoint/visit/make-visible"
+      ]
     }
   ],
   "footerSocials": {
