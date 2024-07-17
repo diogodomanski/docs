@@ -218,6 +218,245 @@
           }
         ]
       },
+      "MakeVisitVisibleOutputDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "description": "ID da visita na Visitown"
+          },
+          "visitType": {
+            "enum": [
+              "EXPRESS",
+              "INSPECTION_OCCUPATION",
+              "INSPECTION_PRE_AD",
+              "INSPECTION_VACANCY",
+              "LOCAL",
+              "REMOTE"
+            ],
+            "type": "string",
+            "description": "Tipo da visita"
+          },
+          "status": {
+            "enum": [
+              "requested",
+              "accepted",
+              "arrived",
+              "started",
+              "finished",
+              "canceled"
+            ],
+            "type": "string",
+            "description": "Status da visita"
+          },
+          "acceptableBy": {
+            "enum": [
+              "ALL",
+              "SUBSCRIBER_AGENTS_ONLY",
+              "VISITOWNERS_ONLY"
+            ],
+            "type": "string",
+            "description": "Quem poderá aceitar essa visita"
+          },
+          "acceptableByAgentGroup": {
+            "description": "Grupo de demonstradores que tem preferência de aceite desta visita",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AgentGroupDto"
+              }
+            ]
+          },
+          "acceptableByAgentGroupDeadline": {
+            "format": "date-time",
+            "type": "string",
+            "description": "Data/Hora limite para o grupo de demonstradores preferencial aceitar estar esta visita"
+          },
+          "isHidden": {
+            "type": "boolean",
+            "description": "Se a visita não será listada no app, para aceite. Valor padrão: false. A visita ficará visivel, automaticamente, 1h antes do horário agendado (para visitas com demonstradores internos), 2h antes do horário agendado (para visitas com visitowners) ou a qualquer tempo, chamando-se o enpoint /integration/visits/:id/make-visible",
+            "default": false
+          },
+          "propertyCode": {
+            "type": "string",
+            "description": "Referência do imóvel"
+          },
+          "visitorName": {
+            "type": "string",
+            "description": "Nome do visitante"
+          },
+          "visitorEmail": {
+            "type": "string",
+            "description": "Email do visitante",
+            "format": "email"
+          },
+          "visitorPhone": {
+            "type": "string",
+            "description": "Telefone (whatsapp) do visitante",
+            "format": "E.164"
+          },
+          "createdByUserEmail": {
+            "type": "string",
+            "description": "Email do usuário que agendou a visita",
+            "format": "email"
+          },
+          "responsibleUserEmail": {
+            "type": "string",
+            "description": "Email do consultor/corretor responsável pela visita",
+            "format": "email"
+          },
+          "responsibleAgency": {
+            "description": "Agência responsável pela visita",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ResponsibleAgencyDto"
+              }
+            ]
+          },
+          "agentEmail": {
+            "type": "string",
+            "description": "Email do demonstrador. Se houver um vinculado à visita.",
+            "format": "email"
+          },
+          "scheduledAt": {
+            "format": "date-time",
+            "type": "string",
+            "description": "Data/Hora da visita"
+          },
+          "briefing": {
+            "type": "string",
+            "description": "Instruções da visita. Por exemplo: orientações sobre horário de retirada e devolução das chaves, se há necessidade de retirar carta de autorização, etc"
+          },
+          "keyLocation": {
+            "enum": [
+              "AGENCY",
+              "MASTER_KEY",
+              "NONE",
+              "OTHER",
+              "PROPERTY"
+            ],
+            "type": "string",
+            "description": "Local de retirada das chaves"
+          },
+          "keyLocationAddress": {
+            "description": "Endereço do local de retirada das chaves",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AddressDto"
+              }
+            ]
+          },
+          "rescheduleFromVisitId": {
+            "type": "number",
+            "description": "Indica que esta visita é um reagendamento de outra (anterior), com ID indicado neste campo"
+          },
+          "companionType": {
+            "enum": [
+              "NONE",
+              "OTHER",
+              "OWNER"
+            ],
+            "type": "string",
+            "description": "Tipo de acompanhante da visita. "
+          },
+          "companionName": {
+            "type": "string",
+            "description": "Nome do acompanhante da visita"
+          },
+          "companionWhatsappNumber": {
+            "type": "string",
+            "description": "Telefone (whatsapp) do acompanhante da visita",
+            "format": "E.164"
+          },
+          "rescheduleToVisitId": {
+            "type": "number",
+            "description": "Indica que esta visita foi reagendada para outra, com ID indicado neste campo"
+          },
+          "scheduleSourceInputData": {
+            "description": "Dados de entrada do agendamento via parceiro",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ScheduleSourceInputDataDto"
+              }
+            ]
+          },
+          "cancelReason": {
+            "description": "Motivo do cancelamento da visita",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/VisitCancelReasonDto"
+              }
+            ]
+          },
+          "agentVisitNotes": {
+            "type": "string",
+            "description": "Feedback dado pelo demonstrador"
+          },
+          "agentEvaluationUrl": {
+            "type": "string",
+            "description": "Url para o relatório de avaliação da visita (versão Demonstrador)"
+          },
+          "agentEvaluationFormResponse": {
+            "description": "Respostas dadas pelo demonstrador, no formulário de avaliação da visita",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/VisitEvaluationFormResponse"
+              }
+            ]
+          },
+          "visitorEvaluationUrl": {
+            "type": "string",
+            "description": "Url para o relatório de avaliação da visita (versão Visitante)"
+          },
+          "visitorVisitNotes": {
+            "type": "string",
+            "description": "Feedback dado pelo cliente/visitante"
+          },
+          "visitorNps": {
+            "type": "number",
+            "description": "NPS dado pelo cliente/demonstrador ao serviço prestado"
+          },
+          "agentName": {
+            "type": "string",
+            "description": "Nome do demonstrador. Se houver um vinculado à visita."
+          },
+          "agentPhone": {
+            "type": "string",
+            "description": "Telefone (whatsapp) do demonstrador. Se houver um vinculado à visita",
+            "format": "E.164"
+          }
+        },
+        "required": [
+          "id",
+          "visitType",
+          "status",
+          "acceptableBy",
+          "acceptableByAgentGroup",
+          "acceptableByAgentGroupDeadline",
+          "isHidden",
+          "propertyCode",
+          "visitorName",
+          "visitorEmail",
+          "visitorPhone",
+          "createdByUserEmail",
+          "responsibleUserEmail",
+          "responsibleAgency",
+          "scheduledAt",
+          "briefing",
+          "keyLocation",
+          "keyLocationAddress",
+          "companionType",
+          "companionName",
+          "companionWhatsappNumber",
+          "scheduleSourceInputData",
+          "cancelReason",
+          "agentVisitNotes",
+          "agentEvaluationUrl",
+          "agentEvaluationFormResponse",
+          "visitorEvaluationUrl",
+          "visitorVisitNotes",
+          "visitorNps"
+        ]
+      },
       "Error": {
         "required": [
           "error",
