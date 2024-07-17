@@ -218,6 +218,2137 @@
           }
         ]
       },
+      "PaginatePaginationDto": {
+        "type": "object",
+        "properties": {
+          "pageIndex": {
+            "type": "number"
+          },
+          "pageSize": {
+            "type": "number"
+          },
+          "length": {
+            "type": "number"
+          },
+          "sort": {
+            "type": "string"
+          },
+          "order": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "pageIndex",
+          "pageSize",
+          "length"
+        ]
+      },
+      "PaginatedDto": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "description": "Dados da paginação",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "pagination": {
+            "description": "Dados da paginação",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/PaginatePaginationDto"
+              }
+            ]
+          }
+        },
+        "required": [
+          "data",
+          "pagination"
+        ]
+      },
+      "ListAcceptancePipelinesOutputDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "ID do pipeline de aceite (na Visitown)"
+          },
+          "name": {
+            "type": "string",
+            "description": "Nome do pipeline de aceite"
+          },
+          "stepsCount": {
+            "type": "number",
+            "description": "Quantidade de etapas do pipeline"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "stepsCount"
+        ]
+      },
+      "ListAgentsOutputDto": {
+        "type": "object",
+        "properties": {
+          "fullName": {
+            "type": "string",
+            "description": "Nome completo"
+          },
+          "email": {
+            "type": "string",
+            "description": "Email"
+          },
+          "whatsappNumber": {
+            "type": "string",
+            "description": "Número whatsapp (para notificações)"
+          },
+          "isOnline": {
+            "type": "boolean",
+            "description": "Se o demonstrador está atualmente online no app"
+          },
+          "isSubscriberAgent": {
+            "type": "boolean",
+            "description": "Se o demonstrador é interno. Caso contrário, significa que é um Visitowner."
+          }
+        },
+        "required": [
+          "fullName",
+          "email",
+          "whatsappNumber",
+          "isOnline",
+          "isSubscriberAgent"
+        ]
+      },
+      "ListAgentGroupsOutputDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "ID do grupo de demonstradores (na Visitown)"
+          },
+          "name": {
+            "type": "string",
+            "description": "Nome do grupo de demonstradores"
+          },
+          "agentsCount": {
+            "type": "number",
+            "description": "Quantidade de demonstradores no grupo"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "agentsCount"
+        ]
+      },
+      "AddressDto": {
+        "type": "object",
+        "properties": {
+          "streetAddress": {
+            "type": "string",
+            "description": "Logradouro"
+          },
+          "streetNumber": {
+            "type": "string",
+            "description": "Número do imóvel"
+          },
+          "complement": {
+            "type": "string",
+            "description": "Complemento"
+          },
+          "neighborhood": {
+            "type": "string",
+            "description": "Nome do bairro"
+          },
+          "zipCode": {
+            "type": "string",
+            "description": "CEP"
+          },
+          "locality": {
+            "type": "string",
+            "description": "Nome do município"
+          },
+          "state": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 2,
+            "description": "UF",
+            "pattern": "^[A-Z]{2}$"
+          },
+          "country": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 2,
+            "description": "Sigla do país",
+            "pattern": "^[A-Z]{2}$"
+          },
+          "latitude": {
+            "type": "number",
+            "minimum": -90,
+            "maximum": 90,
+            "description": "Latitude"
+          },
+          "longitude": {
+            "type": "number",
+            "minimum": -180,
+            "maximum": 180,
+            "description": "Longitude"
+          }
+        },
+        "required": [
+          "streetAddress",
+          "streetNumber",
+          "neighborhood",
+          "zipCode",
+          "locality",
+          "state",
+          "country"
+        ]
+      },
+      "CreatePropertyOutputDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "ID do imóvel na plataforma Visitown"
+          },
+          "code": {
+            "type": "string",
+            "description": "Referência do imóvel"
+          },
+          "title": {
+            "type": "string",
+            "description": "Título do anúncio do imóvel"
+          },
+          "originalUrl": {
+            "type": "string",
+            "description": "Url do anúncio do imóvel (no portal da imobiliária)"
+          },
+          "mainImageUrl": {
+            "type": "string",
+            "description": "Url da imagem de capa do imóvel"
+          },
+          "description": {
+            "type": "string",
+            "description": "Conteúdo do anúncio do imóvel"
+          },
+          "briefing": {
+            "type": "string",
+            "description": "Instruções gerais do imóvel, que independem da visita. Por exemplo, senha do alarme, dicas de acesso, etc"
+          },
+          "address": {
+            "description": "Endereço do imóvel",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AddressDto"
+              }
+            ]
+          },
+          "defaultKeyLocation": {
+            "enum": [
+              "AGENCY",
+              "MASTER_KEY",
+              "NONE",
+              "OTHER",
+              "PROPERTY"
+            ],
+            "type": "string",
+            "description": "Local padrão de retirada das chaves"
+          },
+          "defaultKeyLocationAddress": {
+            "description": "Endereço padrão do local de retirada das chaves. Obrigatório quando o valor de ```keyLocation``` for ```OTHER```",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AddressDto"
+              }
+            ]
+          },
+          "propertyPurpose": {
+            "enum": [
+              "COMMERCIAL",
+              "RESIDENTIAL"
+            ],
+            "type": "string",
+            "description": "Finalidade do imóvel. Valores possíveis: [COMMERCIAL, RESIDENTIAL]"
+          },
+          "geofenceRadius": {
+            "type": "number",
+            "description": "Raio (metros) que indica a área do imóvel a partir das coordenadas (latitude e longitude) do endereço"
+          },
+          "ownerName": {
+            "type": "string",
+            "description": "Nome do proprietário do imóvel"
+          },
+          "ownerWhatsappNumber": {
+            "type": "string",
+            "description": "Whatsapp do proprietário do imóvel"
+          }
+        },
+        "required": [
+          "id",
+          "code",
+          "title",
+          "originalUrl",
+          "mainImageUrl",
+          "description",
+          "briefing",
+          "address",
+          "defaultKeyLocation",
+          "defaultKeyLocationAddress",
+          "geofenceRadius"
+        ]
+      },
+      "ListPropertiesInputDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "Referência do imóvel. Quando informado, os demais campos são ignorados."
+          },
+          "isActive": {
+            "type": "boolean",
+            "description": "Imóveis ativos? Se \"true\", inclui somente imóveis ativos. Se \"false\", inclui somente imóveis inativos. Se não informado, inclui todos.",
+            "default": false
+          },
+          "updateDateStart": {
+            "format": "date-time",
+            "type": "string",
+            "description": "Data/Hora inicial para filtro da útima atualização"
+          },
+          "updateDateEnd": {
+            "format": "date-time",
+            "type": "string",
+            "description": "Data/Hora final para filtro da útima atualização"
+          },
+          "search": {
+            "type": "string",
+            "description": "Termo de busca (referência ou título do imóvel)"
+          },
+          "pageIndex": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Índice da página, na paginação. Começa em 0."
+          },
+          "pageSize": {
+            "type": "integer",
+            "maximum": 500,
+            "minimum": 0,
+            "description": "Tamanho da página, na paginação. Começa em 0. Valor máximo 100."
+          },
+          "sort": {
+            "type": "string",
+            "description": "Nome do atributo a ser usado na ordenação, na paginação."
+          },
+          "order": {
+            "type": "string",
+            "enum": [
+              "ASC",
+              "DESC"
+            ],
+            "description": "Sentido da ordenação, na paginação."
+          }
+        }
+      },
+      "SavePropertyFromUrlOutputDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "ID do imóvel na plataforma Visitown"
+          },
+          "code": {
+            "type": "string",
+            "description": "Referência do imóvel"
+          },
+          "title": {
+            "type": "string",
+            "description": "Título do anúncio do imóvel"
+          },
+          "originalUrl": {
+            "type": "string",
+            "description": "Url do anúncio do imóvel (no portal da imobiliária)"
+          },
+          "mainImageUrl": {
+            "type": "string",
+            "description": "Url da imagem de capa do imóvel"
+          },
+          "description": {
+            "type": "string",
+            "description": "Conteúdo do anúncio do imóvel"
+          },
+          "briefing": {
+            "type": "string",
+            "description": "Instruções gerais do imóvel, que independem da visita. Por exemplo, senha do alarme, dicas de acesso, etc"
+          },
+          "address": {
+            "description": "Endereço do imóvel",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AddressDto"
+              }
+            ]
+          },
+          "defaultKeyLocation": {
+            "enum": [
+              "AGENCY",
+              "MASTER_KEY",
+              "NONE",
+              "OTHER",
+              "PROPERTY"
+            ],
+            "type": "string",
+            "description": "Local padrão de retirada das chaves"
+          },
+          "defaultKeyLocationAddress": {
+            "description": "Endereço padrão do local de retirada das chaves. Obrigatório quando o valor de ```keyLocation``` for ```OTHER```",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AddressDto"
+              }
+            ]
+          },
+          "propertyPurpose": {
+            "enum": [
+              "COMMERCIAL",
+              "RESIDENTIAL"
+            ],
+            "type": "string",
+            "description": "Finalidade do imóvel. Valores possíveis: [COMMERCIAL, RESIDENTIAL]"
+          },
+          "geofenceRadius": {
+            "type": "number",
+            "description": "Raio (metros) que indica a área do imóvel a partir das coordenadas (latitude e longitude) do endereço"
+          },
+          "ownerName": {
+            "type": "string",
+            "description": "Nome do proprietário do imóvel"
+          },
+          "ownerWhatsappNumber": {
+            "type": "string",
+            "description": "Whatsapp do proprietário do imóvel"
+          }
+        },
+        "required": [
+          "id",
+          "code",
+          "title",
+          "originalUrl",
+          "mainImageUrl",
+          "description",
+          "briefing",
+          "address",
+          "defaultKeyLocation",
+          "defaultKeyLocationAddress",
+          "geofenceRadius"
+        ]
+      },
+      "CreatePropertyInputDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "Referência do imóvel"
+          },
+          "title": {
+            "type": "string",
+            "description": "Título do anúncio do imóvel"
+          },
+          "originalUrl": {
+            "type": "string",
+            "description": "Url do anúncio do imóvel (no portal da imobiliária)"
+          },
+          "mainImageUrl": {
+            "type": "string",
+            "description": "Url da imagem de capa do anúncio do imóvel"
+          },
+          "description": {
+            "type": "string",
+            "description": "Conteúdo do anúncio do imóvel"
+          },
+          "briefing": {
+            "type": "string",
+            "description": "Instruções gerais do imóvel, independente de visita. Por exemplo, senha do alarme, dicas de acesso, etc"
+          },
+          "address": {
+            "description": "Endereço do imóvel",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AddressDto"
+              }
+            ]
+          },
+          "defaultKeyLocation": {
+            "enum": [
+              "AGENCY",
+              "MASTER_KEY",
+              "NONE",
+              "OTHER",
+              "PROPERTY"
+            ],
+            "type": "string",
+            "description": "Local padrão de retirada das chaves"
+          },
+          "defaultKeyLocationAddress": {
+            "description": "Endereço padrão do local de retirada das chaves. Obrigatório quando o valor de ```keyLocation``` for ```OTHER```",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AddressDto"
+              }
+            ]
+          },
+          "propertyPurpose": {
+            "enum": [
+              "COMMERCIAL",
+              "RESIDENTIAL"
+            ],
+            "type": "string",
+            "description": "Finalidade do imóvel. Valores possíveis: [COMMERCIAL, RESIDENTIAL]"
+          },
+          "geofenceRadius": {
+            "type": "number",
+            "minimum": 0,
+            "description": "Raio (metros) que indica a área do imóvel a partir das coordenadas (latitude e longitude) do endereço"
+          },
+          "ownerName": {
+            "type": "string",
+            "description": "Nome do proprietário do imóvel"
+          },
+          "ownerWhatsappNumber": {
+            "type": "string",
+            "description": "Whatsapp do proprietário do imóvel"
+          }
+        },
+        "required": [
+          "code",
+          "title",
+          "originalUrl",
+          "mainImageUrl",
+          "description",
+          "address",
+          "defaultKeyLocation"
+        ]
+      },
+      "SavePropertyFromUrlInputDto": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "description": "Url do anúncio do imóvel"
+          },
+          "address": {
+            "description": "Endereço do imóvel",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AddressDto"
+              }
+            ]
+          },
+          "defaultKeyLocation": {
+            "enum": [
+              "AGENCY",
+              "MASTER_KEY",
+              "NONE",
+              "OTHER",
+              "PROPERTY"
+            ],
+            "type": "string",
+            "description": "Local padrão de retirada das chaves. IMPORTANTE: Não poderão ser agendadas visitas em imóveis sem local padrão das chaves."
+          },
+          "defaultKeyLocationAddress": {
+            "description": "Endereço padrão do local de retirada das chaves. Obrigatório quando o valor de ```keyLocation``` for ```OTHER```",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AddressDto"
+              }
+            ]
+          },
+          "propertyPurpose": {
+            "enum": [
+              "COMMERCIAL",
+              "RESIDENTIAL"
+            ],
+            "type": "string",
+            "description": "Finalidade do imóvel. Valores possíveis: [COMMERCIAL, RESIDENTIAL]"
+          },
+          "geofenceRadius": {
+            "type": "number",
+            "minimum": 0,
+            "description": "Raio (metros) que indica a área do imóvel a partir das coordenadas (latitude e longitude) do endereço"
+          },
+          "ownerName": {
+            "type": "string",
+            "description": "Nome do proprietário do imóvel"
+          },
+          "ownerWhatsappNumber": {
+            "type": "string",
+            "description": "Whatsapp do proprietário do imóvel"
+          }
+        },
+        "required": [
+          "url"
+        ]
+      },
+      "UpdatePropertyInputDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "Referência do imóvel"
+          },
+          "title": {
+            "type": "string",
+            "description": "Título do anúncio do imóvel"
+          },
+          "originalUrl": {
+            "type": "string",
+            "description": "Url do anúncio do imóvel (no portal da imobiliária)"
+          },
+          "mainImageUrl": {
+            "type": "string",
+            "description": "Url da imagem de capa do anúncio do imóvel"
+          },
+          "description": {
+            "type": "string",
+            "description": "Conteúdo do anúncio do imóvel"
+          },
+          "briefing": {
+            "type": "string",
+            "description": "Instruções gerais do imóvel, independente de visita. Por exemplo, senha do alarme, dicas de acesso, etc"
+          },
+          "address": {
+            "description": "Endereço do imóvel",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AddressDto"
+              }
+            ]
+          },
+          "defaultKeyLocation": {
+            "enum": [
+              "AGENCY",
+              "MASTER_KEY",
+              "NONE",
+              "OTHER",
+              "PROPERTY"
+            ],
+            "type": "string",
+            "description": "Local padrão de retirada das chaves"
+          },
+          "defaultKeyLocationAddress": {
+            "description": "Endereço padrão do local de retirada das chaves. Obrigatório quando o valor de ```keyLocation``` for ```OTHER```",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AddressDto"
+              }
+            ]
+          },
+          "propertyPurpose": {
+            "enum": [
+              "COMMERCIAL",
+              "RESIDENTIAL"
+            ],
+            "type": "string",
+            "description": "Finalidade do imóvel. Valores possíveis: [COMMERCIAL, RESIDENTIAL]"
+          },
+          "geofenceRadius": {
+            "type": "number",
+            "minimum": 0,
+            "description": "Raio (metros) que indica a área do imóvel a partir das coordenadas (latitude e longitude) do endereço"
+          },
+          "ownerName": {
+            "type": "string",
+            "description": "Nome do proprietário do imóvel"
+          },
+          "ownerWhatsappNumber": {
+            "type": "string",
+            "description": "Whatsapp do proprietário do imóvel"
+          }
+        },
+        "required": [
+          "code",
+          "title",
+          "originalUrl",
+          "mainImageUrl",
+          "description",
+          "address",
+          "defaultKeyLocation"
+        ]
+      },
+      "UpdatePropertyOutputDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "ID do imóvel na plataforma Visitown"
+          },
+          "code": {
+            "type": "string",
+            "description": "Referência do imóvel"
+          },
+          "title": {
+            "type": "string",
+            "description": "Título do anúncio do imóvel"
+          },
+          "originalUrl": {
+            "type": "string",
+            "description": "Url do anúncio do imóvel (no portal da imobiliária)"
+          },
+          "mainImageUrl": {
+            "type": "string",
+            "description": "Url da imagem de capa do imóvel"
+          },
+          "description": {
+            "type": "string",
+            "description": "Conteúdo do anúncio do imóvel"
+          },
+          "briefing": {
+            "type": "string",
+            "description": "Instruções gerais do imóvel, que independem da visita. Por exemplo, senha do alarme, dicas de acesso, etc"
+          },
+          "address": {
+            "description": "Endereço do imóvel",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AddressDto"
+              }
+            ]
+          },
+          "defaultKeyLocation": {
+            "enum": [
+              "AGENCY",
+              "MASTER_KEY",
+              "NONE",
+              "OTHER",
+              "PROPERTY"
+            ],
+            "type": "string",
+            "description": "Local padrão de retirada das chaves"
+          },
+          "defaultKeyLocationAddress": {
+            "description": "Endereço padrão do local de retirada das chaves. Obrigatório quando o valor de ```keyLocation``` for ```OTHER```",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AddressDto"
+              }
+            ]
+          },
+          "propertyPurpose": {
+            "enum": [
+              "COMMERCIAL",
+              "RESIDENTIAL"
+            ],
+            "type": "string",
+            "description": "Finalidade do imóvel. Valores possíveis: [COMMERCIAL, RESIDENTIAL]"
+          },
+          "geofenceRadius": {
+            "type": "number",
+            "description": "Raio (metros) que indica a área do imóvel a partir das coordenadas (latitude e longitude) do endereço"
+          },
+          "ownerName": {
+            "type": "string",
+            "description": "Nome do proprietário do imóvel"
+          },
+          "ownerWhatsappNumber": {
+            "type": "string",
+            "description": "Whatsapp do proprietário do imóvel"
+          }
+        },
+        "required": [
+          "id",
+          "code",
+          "title",
+          "originalUrl",
+          "mainImageUrl",
+          "description",
+          "briefing",
+          "address",
+          "defaultKeyLocation",
+          "defaultKeyLocationAddress",
+          "geofenceRadius"
+        ]
+      },
+      "AgentGroupDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "ID do grupo preferencial de demonstradores (na Visitown)"
+          },
+          "name": {
+            "type": "string",
+            "description": "Nome do grupo preferencial de demonstradores"
+          }
+        },
+        "required": [
+          "id",
+          "name"
+        ]
+      },
+      "ResponsibleAgencyDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "ID da agência responsável (na Visitown)"
+          },
+          "name": {
+            "type": "string",
+            "description": "Nome da agência responsável"
+          }
+        },
+        "required": [
+          "id",
+          "name"
+        ]
+      },
+      "ScheduleSourceInputDataDto": {
+        "type": "object",
+        "properties": {
+          "sourceVisitId": {
+            "type": "string",
+            "description": "Id da visita no sistema do parceiro"
+          },
+          "webhooks": {
+            "type": "array",
+            "description": "Lista de urls para as quais serão disparados webhooks dos eventos dessa visita",
+            "items": {
+              "type": "string",
+              "format": "url"
+            }
+          },
+          "customData": {
+            "type": "object",
+            "description": "Dados customizados a serem enviados no payload dos webhooks dessa visita"
+          }
+        },
+        "required": [
+          "sourceVisitId",
+          "webhooks"
+        ]
+      },
+      "VisitCancelReasonDto": {
+        "type": "object",
+        "properties": {
+          "cancelReasonId": {
+            "type": "number",
+            "minimum": 1,
+            "description": "Id do motivo de cancelamento"
+          },
+          "cancelReasonName": {
+            "type": "string",
+            "description": "Nome (internacionalizado) do motivo de cancelamento"
+          },
+          "cancelReasonSlug": {
+            "type": "string",
+            "description": "Slug do motivo de cancelamento"
+          },
+          "cancelReasonNotes": {
+            "type": "string",
+            "description": "Observações sobre o cancelamento"
+          }
+        },
+        "required": [
+          "cancelReasonId",
+          "cancelReasonName",
+          "cancelReasonSlug",
+          "cancelReasonNotes"
+        ]
+      },
+      "VisitEvaluationFormResponseItemQuestion": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Identificador único da pergunta"
+          },
+          "title": {
+            "type": "string",
+            "description": "Título ou texto da pergunta"
+          }
+        },
+        "required": [
+          "name",
+          "title"
+        ]
+      },
+      "VisitEvaluationFormResponseItem": {
+        "type": "object",
+        "properties": {
+          "question": {
+            "description": "Dados da pergunta",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/VisitEvaluationFormResponseItemQuestion"
+              }
+            ]
+          },
+          "answer": {
+            "type": "string",
+            "description": "Conteúdo da resposta"
+          }
+        },
+        "required": [
+          "question",
+          "answer"
+        ]
+      },
+      "VisitEvaluationFormResponse": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "description": "Respostas dadas pelo demonstrador, no formulário de avaliação da visita",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VisitEvaluationFormResponseItem"
+            }
+          }
+        },
+        "required": [
+          "items"
+        ]
+      },
+      "ScheduleVisitOutputDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "description": "ID da visita na Visitown"
+          },
+          "visitType": {
+            "enum": [
+              "EXPRESS",
+              "INSPECTION_OCCUPATION",
+              "INSPECTION_PRE_AD",
+              "INSPECTION_VACANCY",
+              "LOCAL",
+              "REMOTE"
+            ],
+            "type": "string",
+            "description": "Tipo da visita"
+          },
+          "status": {
+            "enum": [
+              "requested",
+              "accepted",
+              "arrived",
+              "started",
+              "finished",
+              "canceled"
+            ],
+            "type": "string",
+            "description": "Status da visita"
+          },
+          "acceptableBy": {
+            "enum": [
+              "ALL",
+              "SUBSCRIBER_AGENTS_ONLY",
+              "VISITOWNERS_ONLY"
+            ],
+            "type": "string",
+            "description": "Quem poderá aceitar essa visita"
+          },
+          "acceptableByAgentGroup": {
+            "description": "Grupo de demonstradores que tem preferência de aceite desta visita",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AgentGroupDto"
+              }
+            ]
+          },
+          "acceptableByAgentGroupDeadline": {
+            "format": "date-time",
+            "type": "string",
+            "description": "Data/Hora limite para o grupo de demonstradores preferencial aceitar estar esta visita"
+          },
+          "isHidden": {
+            "type": "boolean",
+            "description": "Se a visita não será listada no app, para aceite. Valor padrão: false. A visita ficará visivel, automaticamente, 1h antes do horário agendado (para visitas com demonstradores internos), 2h antes do horário agendado (para visitas com visitowners) ou a qualquer tempo, chamando-se o enpoint /integration/visits/:id/make-visible",
+            "default": false
+          },
+          "propertyCode": {
+            "type": "string",
+            "description": "Referência do imóvel"
+          },
+          "visitorName": {
+            "type": "string",
+            "description": "Nome do visitante"
+          },
+          "visitorEmail": {
+            "type": "string",
+            "description": "Email do visitante",
+            "format": "email"
+          },
+          "visitorPhone": {
+            "type": "string",
+            "description": "Telefone (whatsapp) do visitante",
+            "format": "E.164"
+          },
+          "createdByUserEmail": {
+            "type": "string",
+            "description": "Email do usuário que agendou a visita",
+            "format": "email"
+          },
+          "responsibleUserEmail": {
+            "type": "string",
+            "description": "Email do consultor/corretor responsável pela visita",
+            "format": "email"
+          },
+          "responsibleAgency": {
+            "description": "Agência responsável pela visita",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ResponsibleAgencyDto"
+              }
+            ]
+          },
+          "agentEmail": {
+            "type": "string",
+            "description": "Email do demonstrador. Se houver um vinculado à visita.",
+            "format": "email"
+          },
+          "scheduledAt": {
+            "format": "date-time",
+            "type": "string",
+            "description": "Data/Hora da visita"
+          },
+          "briefing": {
+            "type": "string",
+            "description": "Instruções da visita. Por exemplo: orientações sobre horário de retirada e devolução das chaves, se há necessidade de retirar carta de autorização, etc"
+          },
+          "keyLocation": {
+            "enum": [
+              "AGENCY",
+              "MASTER_KEY",
+              "NONE",
+              "OTHER",
+              "PROPERTY"
+            ],
+            "type": "string",
+            "description": "Local de retirada das chaves"
+          },
+          "keyLocationAddress": {
+            "description": "Endereço do local de retirada das chaves",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AddressDto"
+              }
+            ]
+          },
+          "rescheduleFromVisitId": {
+            "type": "number",
+            "description": "Indica que esta visita é um reagendamento de outra (anterior), com ID indicado neste campo"
+          },
+          "companionType": {
+            "enum": [
+              "NONE",
+              "OTHER",
+              "OWNER"
+            ],
+            "type": "string",
+            "description": "Tipo de acompanhante da visita. "
+          },
+          "companionName": {
+            "type": "string",
+            "description": "Nome do acompanhante da visita"
+          },
+          "companionWhatsappNumber": {
+            "type": "string",
+            "description": "Telefone (whatsapp) do acompanhante da visita",
+            "format": "E.164"
+          },
+          "rescheduleToVisitId": {
+            "type": "number",
+            "description": "Indica que esta visita foi reagendada para outra, com ID indicado neste campo"
+          },
+          "scheduleSourceInputData": {
+            "description": "Dados de entrada do agendamento via parceiro",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ScheduleSourceInputDataDto"
+              }
+            ]
+          },
+          "cancelReason": {
+            "description": "Motivo do cancelamento da visita",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/VisitCancelReasonDto"
+              }
+            ]
+          },
+          "agentVisitNotes": {
+            "type": "string",
+            "description": "Feedback dado pelo demonstrador"
+          },
+          "agentEvaluationUrl": {
+            "type": "string",
+            "description": "Url para o relatório de avaliação da visita (versão Demonstrador)"
+          },
+          "agentEvaluationFormResponse": {
+            "description": "Respostas dadas pelo demonstrador, no formulário de avaliação da visita",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/VisitEvaluationFormResponse"
+              }
+            ]
+          },
+          "visitorEvaluationUrl": {
+            "type": "string",
+            "description": "Url para o relatório de avaliação da visita (versão Visitante)"
+          },
+          "visitorVisitNotes": {
+            "type": "string",
+            "description": "Feedback dado pelo cliente/visitante"
+          },
+          "visitorNps": {
+            "type": "number",
+            "description": "NPS dado pelo cliente/demonstrador ao serviço prestado"
+          },
+          "agentName": {
+            "type": "string",
+            "description": "Nome do demonstrador. Se houver um vinculado à visita."
+          },
+          "agentPhone": {
+            "type": "string",
+            "description": "Telefone (whatsapp) do demonstrador. Se houver um vinculado à visita",
+            "format": "E.164"
+          }
+        },
+        "required": [
+          "id",
+          "visitType",
+          "status",
+          "acceptableBy",
+          "acceptableByAgentGroup",
+          "acceptableByAgentGroupDeadline",
+          "isHidden",
+          "propertyCode",
+          "visitorName",
+          "visitorEmail",
+          "visitorPhone",
+          "createdByUserEmail",
+          "responsibleUserEmail",
+          "responsibleAgency",
+          "scheduledAt",
+          "briefing",
+          "keyLocation",
+          "keyLocationAddress",
+          "companionType",
+          "companionName",
+          "companionWhatsappNumber",
+          "scheduleSourceInputData",
+          "cancelReason",
+          "agentVisitNotes",
+          "agentEvaluationUrl",
+          "agentEvaluationFormResponse",
+          "visitorEvaluationUrl",
+          "visitorVisitNotes",
+          "visitorNps"
+        ]
+      },
+      "GetScheduleAvailabilityOutputDto": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "format": "date-time",
+            "type": "string",
+            "description": "Data/Hora"
+          },
+          "availabilityLevel": {
+            "type": "number",
+            "description": "Nível de disponibilidade",
+            "minimum": 0,
+            "maximum": 1
+          }
+        },
+        "required": [
+          "date",
+          "availabilityLevel"
+        ]
+      },
+      "ListCancelReasonsOutputDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "description": "Id"
+          },
+          "name": {
+            "type": "string",
+            "description": "Nome"
+          },
+          "slug": {
+            "type": "string",
+            "description": "Código"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "slug"
+        ]
+      },
+      "WebhookPayloadDto": {
+        "type": "object",
+        "properties": {
+          "visitId": {
+            "type": "number",
+            "description": "ID da visita na plataforma Visitown"
+          },
+          "partnerVisitId": {
+            "type": "string",
+            "description": "ID da visita na plataforma do parceiro. Disponível quando a visita é criada passando-se esse valor."
+          },
+          "eventType": {
+            "enum": [
+              "VISIT_CREATED",
+              "VISIT_AGENT_CHANGED",
+              "VISIT_RESCHEDULED",
+              "VISIT_FINISHED",
+              "VISIT_CANCELED",
+              "AGENT_EVALUATION_RECEIVED",
+              "VISITOR_FEEDBACK_RECEIVED",
+              "CREATE",
+              "FINISH",
+              "CANCEL",
+              "FEEDBACK"
+            ],
+            "type": "string",
+            "description": "Tipo do evento"
+          },
+          "scheduledAt": {
+            "format": "ISO",
+            "type": "string",
+            "description": "Data/Hora da visita"
+          },
+          "evaluation": {
+            "type": "string",
+            "description": "Avaliação da visita. Pode ser do demonstrador (quando ```eventType = AGENT_EVALUATION_RECEIVED```) ou do visitante (quando ```eventType = VISITOR_EVALUATION_RECEIVED```)"
+          },
+          "offerAmount": {
+            "type": "number",
+            "description": "Valor da proposta. Disponível quando ```eventType = VISITOR_EVALUATION_RECEIVED``` e o cliente preencheu o campo com o valor da proposta"
+          },
+          "updatedAt": {
+            "format": "ISO",
+            "type": "string",
+            "description": "Data/Hora do evento que gerou o webhook"
+          },
+          "customData": {
+            "type": "object",
+            "description": "Dados extras (informados pelo parceiro, ao agenda a visita), passados no parâmetro ```customData```"
+          }
+        },
+        "required": [
+          "visitId",
+          "eventType",
+          "scheduledAt",
+          "evaluation",
+          "updatedAt"
+        ]
+      },
+      "FindVisitByIdOutputDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "description": "ID da visita na Visitown"
+          },
+          "visitType": {
+            "enum": [
+              "EXPRESS",
+              "INSPECTION_OCCUPATION",
+              "INSPECTION_PRE_AD",
+              "INSPECTION_VACANCY",
+              "LOCAL",
+              "REMOTE"
+            ],
+            "type": "string",
+            "description": "Tipo da visita"
+          },
+          "status": {
+            "enum": [
+              "requested",
+              "accepted",
+              "arrived",
+              "started",
+              "finished",
+              "canceled"
+            ],
+            "type": "string",
+            "description": "Status da visita"
+          },
+          "acceptableBy": {
+            "enum": [
+              "ALL",
+              "SUBSCRIBER_AGENTS_ONLY",
+              "VISITOWNERS_ONLY"
+            ],
+            "type": "string",
+            "description": "Quem poderá aceitar essa visita"
+          },
+          "acceptableByAgentGroup": {
+            "description": "Grupo de demonstradores que tem preferência de aceite desta visita",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AgentGroupDto"
+              }
+            ]
+          },
+          "acceptableByAgentGroupDeadline": {
+            "format": "date-time",
+            "type": "string",
+            "description": "Data/Hora limite para o grupo de demonstradores preferencial aceitar estar esta visita"
+          },
+          "isHidden": {
+            "type": "boolean",
+            "description": "Se a visita não será listada no app, para aceite. Valor padrão: false. A visita ficará visivel, automaticamente, 1h antes do horário agendado (para visitas com demonstradores internos), 2h antes do horário agendado (para visitas com visitowners) ou a qualquer tempo, chamando-se o enpoint /integration/visits/:id/make-visible",
+            "default": false
+          },
+          "propertyCode": {
+            "type": "string",
+            "description": "Referência do imóvel"
+          },
+          "visitorName": {
+            "type": "string",
+            "description": "Nome do visitante"
+          },
+          "visitorEmail": {
+            "type": "string",
+            "description": "Email do visitante",
+            "format": "email"
+          },
+          "visitorPhone": {
+            "type": "string",
+            "description": "Telefone (whatsapp) do visitante",
+            "format": "E.164"
+          },
+          "createdByUserEmail": {
+            "type": "string",
+            "description": "Email do usuário que agendou a visita",
+            "format": "email"
+          },
+          "responsibleUserEmail": {
+            "type": "string",
+            "description": "Email do consultor/corretor responsável pela visita",
+            "format": "email"
+          },
+          "responsibleAgency": {
+            "description": "Agência responsável pela visita",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ResponsibleAgencyDto"
+              }
+            ]
+          },
+          "agentEmail": {
+            "type": "string",
+            "description": "Email do demonstrador. Se houver um vinculado à visita.",
+            "format": "email"
+          },
+          "scheduledAt": {
+            "format": "date-time",
+            "type": "string",
+            "description": "Data/Hora da visita"
+          },
+          "briefing": {
+            "type": "string",
+            "description": "Instruções da visita. Por exemplo: orientações sobre horário de retirada e devolução das chaves, se há necessidade de retirar carta de autorização, etc"
+          },
+          "keyLocation": {
+            "enum": [
+              "AGENCY",
+              "MASTER_KEY",
+              "NONE",
+              "OTHER",
+              "PROPERTY"
+            ],
+            "type": "string",
+            "description": "Local de retirada das chaves"
+          },
+          "keyLocationAddress": {
+            "description": "Endereço do local de retirada das chaves",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AddressDto"
+              }
+            ]
+          },
+          "rescheduleFromVisitId": {
+            "type": "number",
+            "description": "Indica que esta visita é um reagendamento de outra (anterior), com ID indicado neste campo"
+          },
+          "companionType": {
+            "enum": [
+              "NONE",
+              "OTHER",
+              "OWNER"
+            ],
+            "type": "string",
+            "description": "Tipo de acompanhante da visita. "
+          },
+          "companionName": {
+            "type": "string",
+            "description": "Nome do acompanhante da visita"
+          },
+          "companionWhatsappNumber": {
+            "type": "string",
+            "description": "Telefone (whatsapp) do acompanhante da visita",
+            "format": "E.164"
+          },
+          "rescheduleToVisitId": {
+            "type": "number",
+            "description": "Indica que esta visita foi reagendada para outra, com ID indicado neste campo"
+          },
+          "scheduleSourceInputData": {
+            "description": "Dados de entrada do agendamento via parceiro",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ScheduleSourceInputDataDto"
+              }
+            ]
+          },
+          "cancelReason": {
+            "description": "Motivo do cancelamento da visita",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/VisitCancelReasonDto"
+              }
+            ]
+          },
+          "agentVisitNotes": {
+            "type": "string",
+            "description": "Feedback dado pelo demonstrador"
+          },
+          "agentEvaluationUrl": {
+            "type": "string",
+            "description": "Url para o relatório de avaliação da visita (versão Demonstrador)"
+          },
+          "agentEvaluationFormResponse": {
+            "description": "Respostas dadas pelo demonstrador, no formulário de avaliação da visita",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/VisitEvaluationFormResponse"
+              }
+            ]
+          },
+          "visitorEvaluationUrl": {
+            "type": "string",
+            "description": "Url para o relatório de avaliação da visita (versão Visitante)"
+          },
+          "visitorVisitNotes": {
+            "type": "string",
+            "description": "Feedback dado pelo cliente/visitante"
+          },
+          "visitorNps": {
+            "type": "number",
+            "description": "NPS dado pelo cliente/demonstrador ao serviço prestado"
+          },
+          "agentName": {
+            "type": "string",
+            "description": "Nome do demonstrador. Se houver um vinculado à visita."
+          },
+          "agentPhone": {
+            "type": "string",
+            "description": "Telefone (whatsapp) do demonstrador. Se houver um vinculado à visita",
+            "format": "E.164"
+          }
+        },
+        "required": [
+          "id",
+          "visitType",
+          "status",
+          "acceptableBy",
+          "acceptableByAgentGroup",
+          "acceptableByAgentGroupDeadline",
+          "isHidden",
+          "propertyCode",
+          "visitorName",
+          "visitorEmail",
+          "visitorPhone",
+          "createdByUserEmail",
+          "responsibleUserEmail",
+          "responsibleAgency",
+          "scheduledAt",
+          "briefing",
+          "keyLocation",
+          "keyLocationAddress",
+          "companionType",
+          "companionName",
+          "companionWhatsappNumber",
+          "scheduleSourceInputData",
+          "cancelReason",
+          "agentVisitNotes",
+          "agentEvaluationUrl",
+          "agentEvaluationFormResponse",
+          "visitorEvaluationUrl",
+          "visitorVisitNotes",
+          "visitorNps"
+        ]
+      },
+      "ScheduleVisitInputDto": {
+        "type": "object",
+        "properties": {
+          "propertyCode": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 255,
+            "description": "Referência do imóvel. O valor deste campo será ignorado quando forem passados os dados detalhados em ```property```"
+          },
+          "property": {
+            "description": "Dados detalhados do imóvel (para cadastro ou atualização, antes do agendamento da visita)",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/CreatePropertyInputDto"
+              }
+            ]
+          },
+          "scheduledAt": {
+            "format": "date-time",
+            "type": "string",
+            "description": "Data/Hora da visita"
+          },
+          "visitorName": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 100,
+            "description": "Nome do visitante"
+          },
+          "visitorEmail": {
+            "type": "string",
+            "description": "Email do visitante",
+            "format": "email"
+          },
+          "visitorPhone": {
+            "type": "string",
+            "description": "Telefone (whatsapp) do visitante",
+            "format": "E.164"
+          },
+          "visitType": {
+            "enum": [
+              "EXPRESS",
+              "INSPECTION_OCCUPATION",
+              "INSPECTION_PRE_AD",
+              "INSPECTION_VACANCY",
+              "LOCAL",
+              "REMOTE"
+            ],
+            "type": "string",
+            "description": "Tipo da visita"
+          },
+          "acceptableBy": {
+            "enum": [
+              "ALL",
+              "SUBSCRIBER_AGENTS_ONLY",
+              "VISITOWNERS_ONLY"
+            ],
+            "type": "string",
+            "description": "Quem poderá aceitar essa visita"
+          },
+          "acceptableByAgentGroup": {
+            "type": "string",
+            "description": "ID do grupo preferencial de demonstradores. Este grupo ter preferência nos primeiros 60 minutos, após a visita ter sido solicitada",
+            "default": null
+          },
+          "isAcceptableByLeadLastAgent": {
+            "type": "boolean",
+            "description": "Deve ser dada preferência de aceite ao demonstrador que realizou a última visita com este cliente? Esse demonstrador terá mais prioridade que o acceptableByAgentGroup.",
+            "default": false
+          },
+          "acceptableByPipeline": {
+            "type": "string",
+            "description": "ID do pipeline de aceite. Se este campo for informado, os campos \"acceptableByAgentGroup\" e \"isAcceptableByLeadLastAgent\" serão ignorados",
+            "default": null
+          },
+          "createdByUserEmail": {
+            "type": "string",
+            "description": "Email do usuário que está cadastrando a visita. Deve ser um email cadastrado na Visitown."
+          },
+          "responsibleUserEmail": {
+            "type": "string",
+            "description": "Email do consultor/corretor que ficará responsável pela visita. Deve ser um email cadastrado na Visitown."
+          },
+          "responsibleAgency": {
+            "type": "string",
+            "description": "Agência responsável pela visita. Se não for informada, será usada a agência do consultor/corretor responsável."
+          },
+          "agentEmail": {
+            "type": "string",
+            "description": "Email do demonstrador. Deve ser informado quando deseja-se agendar a visita para um demonstrador específico. Deve ser um email de demonstrador cadastrado na plataforma Visitown",
+            "format": "email"
+          },
+          "isAgentAware": {
+            "type": "boolean",
+            "description": "Confirmação de que o demonstrador vinculado com esta visita está ciente de que ela será lançada na sua agenda. Obrigatório quando um demonstrador for informado (campo agentEmail).",
+            "default": false
+          },
+          "briefing": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 5000,
+            "description": "Instruções da visita. Por exemplo: orientações sobre horário de retirada e devolução das chaves, se há necessidade de retirar carta de autorização, etc"
+          },
+          "includePropertyBriefing": {
+            "type": "boolean",
+            "description": "Deve ou não incluir as instruções do imóvel nas instruções da visita.",
+            "default": false
+          },
+          "keyLocation": {
+            "enum": [
+              "AGENCY",
+              "MASTER_KEY",
+              "NONE",
+              "OTHER",
+              "PROPERTY"
+            ],
+            "type": "string",
+            "description": "Local de retirada das chaves"
+          },
+          "keyLocationAddress": {
+            "description": "Endereço do local de retirada das chaves. Obrigatório quando o valor de ```keyLocation``` for ```OTHER```",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AddressDto"
+              }
+            ]
+          },
+          "companionType": {
+            "default": "NONE",
+            "enum": [
+              "NONE",
+              "OTHER",
+              "OWNER"
+            ],
+            "type": "string",
+            "description": "Tipo de acompanhante da visita. "
+          },
+          "companionName": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 50,
+            "description": "Nome do acompanhante da visita"
+          },
+          "companionWhatsappNumber": {
+            "type": "string",
+            "description": "Telefone (whatsapp) do acompanhante da visita",
+            "format": "E.164"
+          },
+          "scheduleSourceInputData": {
+            "description": "Dados de entrada do agendamento via parceiro",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ScheduleSourceInputDataDto"
+              }
+            ]
+          },
+          "isHidden": {
+            "type": "boolean",
+            "description": "Se a visita não será listada no app, para aceite. Valor padrão: false. A visita ficará visivel, automaticamente, 1h antes do horário agendado (para visitas com demonstradores internos), 2h antes do horário agendado (para visitas com visitowners) ou a qualquer tempo, chamando-se o enpoint /integration/visits/:id/make-visible",
+            "default": false
+          }
+        },
+        "required": [
+          "scheduledAt",
+          "visitorName",
+          "visitorEmail",
+          "visitorPhone",
+          "visitType",
+          "acceptableBy",
+          "createdByUserEmail",
+          "responsibleUserEmail",
+          "briefing",
+          "companionType"
+        ]
+      },
+      "CancelVisitInputDto": {
+        "type": "object",
+        "properties": {
+          "cancelReasonId": {
+            "type": "number",
+            "minimum": 1,
+            "description": "Id do motivo de cancelamento"
+          },
+          "cancelReasonNotes": {
+            "type": "string",
+            "description": "Observações sobre o cancelamento"
+          }
+        },
+        "required": [
+          "cancelReasonId",
+          "cancelReasonNotes"
+        ]
+      },
+      "CancelVisitOutputDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "description": "ID da visita na Visitown"
+          },
+          "visitType": {
+            "enum": [
+              "EXPRESS",
+              "INSPECTION_OCCUPATION",
+              "INSPECTION_PRE_AD",
+              "INSPECTION_VACANCY",
+              "LOCAL",
+              "REMOTE"
+            ],
+            "type": "string",
+            "description": "Tipo da visita"
+          },
+          "status": {
+            "enum": [
+              "requested",
+              "accepted",
+              "arrived",
+              "started",
+              "finished",
+              "canceled"
+            ],
+            "type": "string",
+            "description": "Status da visita"
+          },
+          "acceptableBy": {
+            "enum": [
+              "ALL",
+              "SUBSCRIBER_AGENTS_ONLY",
+              "VISITOWNERS_ONLY"
+            ],
+            "type": "string",
+            "description": "Quem poderá aceitar essa visita"
+          },
+          "acceptableByAgentGroup": {
+            "description": "Grupo de demonstradores que tem preferência de aceite desta visita",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AgentGroupDto"
+              }
+            ]
+          },
+          "acceptableByAgentGroupDeadline": {
+            "format": "date-time",
+            "type": "string",
+            "description": "Data/Hora limite para o grupo de demonstradores preferencial aceitar estar esta visita"
+          },
+          "isHidden": {
+            "type": "boolean",
+            "description": "Se a visita não será listada no app, para aceite. Valor padrão: false. A visita ficará visivel, automaticamente, 1h antes do horário agendado (para visitas com demonstradores internos), 2h antes do horário agendado (para visitas com visitowners) ou a qualquer tempo, chamando-se o enpoint /integration/visits/:id/make-visible",
+            "default": false
+          },
+          "propertyCode": {
+            "type": "string",
+            "description": "Referência do imóvel"
+          },
+          "visitorName": {
+            "type": "string",
+            "description": "Nome do visitante"
+          },
+          "visitorEmail": {
+            "type": "string",
+            "description": "Email do visitante",
+            "format": "email"
+          },
+          "visitorPhone": {
+            "type": "string",
+            "description": "Telefone (whatsapp) do visitante",
+            "format": "E.164"
+          },
+          "createdByUserEmail": {
+            "type": "string",
+            "description": "Email do usuário que agendou a visita",
+            "format": "email"
+          },
+          "responsibleUserEmail": {
+            "type": "string",
+            "description": "Email do consultor/corretor responsável pela visita",
+            "format": "email"
+          },
+          "responsibleAgency": {
+            "description": "Agência responsável pela visita",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ResponsibleAgencyDto"
+              }
+            ]
+          },
+          "agentEmail": {
+            "type": "string",
+            "description": "Email do demonstrador. Deve ser informado quando deseja-se agendar a visita para um demonstrador específico. Deve ser um email de demonstrador cadastrado na plataforma Visitown",
+            "format": "email"
+          },
+          "scheduledAt": {
+            "format": "date-time",
+            "type": "string",
+            "description": "Data/Hora da visita"
+          },
+          "briefing": {
+            "type": "string",
+            "description": "Instruções da visita. Por exemplo: orientações sobre horário de retirada e devolução das chaves, se há necessidade de retirar carta de autorização, etc"
+          },
+          "keyLocation": {
+            "enum": [
+              "AGENCY",
+              "MASTER_KEY",
+              "NONE",
+              "OTHER",
+              "PROPERTY"
+            ],
+            "type": "string",
+            "description": "Local de retirada das chaves"
+          },
+          "keyLocationAddress": {
+            "description": "Endereço do local de retirada das chaves",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AddressDto"
+              }
+            ]
+          },
+          "rescheduleFromVisitId": {
+            "type": "number",
+            "description": "Indica que esta visita é um reagendamento de outra (anterior), com ID indicado neste campo"
+          },
+          "companionType": {
+            "enum": [
+              "NONE",
+              "OTHER",
+              "OWNER"
+            ],
+            "type": "string",
+            "description": "Tipo de acompanhante da visita. "
+          },
+          "companionName": {
+            "type": "string",
+            "description": "Nome do acompanhante da visita"
+          },
+          "companionWhatsappNumber": {
+            "type": "string",
+            "description": "Telefone (whatsapp) do acompanhante da visita",
+            "format": "E.164"
+          },
+          "rescheduleToVisitId": {
+            "type": "number",
+            "description": "Indica que esta visita foi reagendada para outra, com ID indicado neste campo"
+          },
+          "scheduleSourceInputData": {
+            "description": "Dados de entrada do agendamento via parceiro",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ScheduleSourceInputDataDto"
+              }
+            ]
+          },
+          "cancelReason": {
+            "description": "Motivo do cancelamento da visita",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/VisitCancelReasonDto"
+              }
+            ]
+          },
+          "agentVisitNotes": {
+            "type": "string",
+            "description": "Feedback dado pelo demonstrador"
+          },
+          "agentEvaluationUrl": {
+            "type": "string",
+            "description": "Url para o relatório de avaliação da visita (versão Demonstrador)"
+          },
+          "agentEvaluationFormResponse": {
+            "description": "Respostas dadas pelo demonstrador, no formulário de avaliação da visita",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/VisitEvaluationFormResponse"
+              }
+            ]
+          },
+          "visitorEvaluationUrl": {
+            "type": "string",
+            "description": "Url para o relatório de avaliação da visita (versão Visitante)"
+          },
+          "visitorVisitNotes": {
+            "type": "string",
+            "description": "Feedback dado pelo cliente/visitante"
+          },
+          "visitorNps": {
+            "type": "number",
+            "description": "NPS dado pelo cliente/demonstrador ao serviço prestado"
+          }
+        },
+        "required": [
+          "id",
+          "visitType",
+          "status",
+          "acceptableBy",
+          "acceptableByAgentGroup",
+          "acceptableByAgentGroupDeadline",
+          "isHidden",
+          "propertyCode",
+          "visitorName",
+          "visitorEmail",
+          "visitorPhone",
+          "createdByUserEmail",
+          "responsibleUserEmail",
+          "responsibleAgency",
+          "scheduledAt",
+          "briefing",
+          "keyLocation",
+          "keyLocationAddress",
+          "companionType",
+          "companionName",
+          "companionWhatsappNumber",
+          "scheduleSourceInputData",
+          "cancelReason",
+          "agentVisitNotes",
+          "agentEvaluationUrl",
+          "agentEvaluationFormResponse",
+          "visitorEvaluationUrl",
+          "visitorVisitNotes",
+          "visitorNps"
+        ]
+      },
+      "MakeVisitHiddenOutputDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "description": "ID da visita na Visitown"
+          },
+          "visitType": {
+            "enum": [
+              "EXPRESS",
+              "INSPECTION_OCCUPATION",
+              "INSPECTION_PRE_AD",
+              "INSPECTION_VACANCY",
+              "LOCAL",
+              "REMOTE"
+            ],
+            "type": "string",
+            "description": "Tipo da visita"
+          },
+          "status": {
+            "enum": [
+              "requested",
+              "accepted",
+              "arrived",
+              "started",
+              "finished",
+              "canceled"
+            ],
+            "type": "string",
+            "description": "Status da visita"
+          },
+          "acceptableBy": {
+            "enum": [
+              "ALL",
+              "SUBSCRIBER_AGENTS_ONLY",
+              "VISITOWNERS_ONLY"
+            ],
+            "type": "string",
+            "description": "Quem poderá aceitar essa visita"
+          },
+          "acceptableByAgentGroup": {
+            "description": "Grupo de demonstradores que tem preferência de aceite desta visita",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AgentGroupDto"
+              }
+            ]
+          },
+          "acceptableByAgentGroupDeadline": {
+            "format": "date-time",
+            "type": "string",
+            "description": "Data/Hora limite para o grupo de demonstradores preferencial aceitar estar esta visita"
+          },
+          "isHidden": {
+            "type": "boolean",
+            "description": "Se a visita não será listada no app, para aceite. Valor padrão: false. A visita ficará visivel, automaticamente, 1h antes do horário agendado (para visitas com demonstradores internos), 2h antes do horário agendado (para visitas com visitowners) ou a qualquer tempo, chamando-se o enpoint /integration/visits/:id/make-visible",
+            "default": false
+          },
+          "propertyCode": {
+            "type": "string",
+            "description": "Referência do imóvel"
+          },
+          "visitorName": {
+            "type": "string",
+            "description": "Nome do visitante"
+          },
+          "visitorEmail": {
+            "type": "string",
+            "description": "Email do visitante",
+            "format": "email"
+          },
+          "visitorPhone": {
+            "type": "string",
+            "description": "Telefone (whatsapp) do visitante",
+            "format": "E.164"
+          },
+          "createdByUserEmail": {
+            "type": "string",
+            "description": "Email do usuário que agendou a visita",
+            "format": "email"
+          },
+          "responsibleUserEmail": {
+            "type": "string",
+            "description": "Email do consultor/corretor responsável pela visita",
+            "format": "email"
+          },
+          "responsibleAgency": {
+            "description": "Agência responsável pela visita",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ResponsibleAgencyDto"
+              }
+            ]
+          },
+          "agentEmail": {
+            "type": "string",
+            "description": "Email do demonstrador. Se houver um vinculado à visita.",
+            "format": "email"
+          },
+          "scheduledAt": {
+            "format": "date-time",
+            "type": "string",
+            "description": "Data/Hora da visita"
+          },
+          "briefing": {
+            "type": "string",
+            "description": "Instruções da visita. Por exemplo: orientações sobre horário de retirada e devolução das chaves, se há necessidade de retirar carta de autorização, etc"
+          },
+          "keyLocation": {
+            "enum": [
+              "AGENCY",
+              "MASTER_KEY",
+              "NONE",
+              "OTHER",
+              "PROPERTY"
+            ],
+            "type": "string",
+            "description": "Local de retirada das chaves"
+          },
+          "keyLocationAddress": {
+            "description": "Endereço do local de retirada das chaves",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AddressDto"
+              }
+            ]
+          },
+          "rescheduleFromVisitId": {
+            "type": "number",
+            "description": "Indica que esta visita é um reagendamento de outra (anterior), com ID indicado neste campo"
+          },
+          "companionType": {
+            "enum": [
+              "NONE",
+              "OTHER",
+              "OWNER"
+            ],
+            "type": "string",
+            "description": "Tipo de acompanhante da visita. "
+          },
+          "companionName": {
+            "type": "string",
+            "description": "Nome do acompanhante da visita"
+          },
+          "companionWhatsappNumber": {
+            "type": "string",
+            "description": "Telefone (whatsapp) do acompanhante da visita",
+            "format": "E.164"
+          },
+          "rescheduleToVisitId": {
+            "type": "number",
+            "description": "Indica que esta visita foi reagendada para outra, com ID indicado neste campo"
+          },
+          "scheduleSourceInputData": {
+            "description": "Dados de entrada do agendamento via parceiro",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ScheduleSourceInputDataDto"
+              }
+            ]
+          },
+          "cancelReason": {
+            "description": "Motivo do cancelamento da visita",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/VisitCancelReasonDto"
+              }
+            ]
+          },
+          "agentVisitNotes": {
+            "type": "string",
+            "description": "Feedback dado pelo demonstrador"
+          },
+          "agentEvaluationUrl": {
+            "type": "string",
+            "description": "Url para o relatório de avaliação da visita (versão Demonstrador)"
+          },
+          "agentEvaluationFormResponse": {
+            "description": "Respostas dadas pelo demonstrador, no formulário de avaliação da visita",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/VisitEvaluationFormResponse"
+              }
+            ]
+          },
+          "visitorEvaluationUrl": {
+            "type": "string",
+            "description": "Url para o relatório de avaliação da visita (versão Visitante)"
+          },
+          "visitorVisitNotes": {
+            "type": "string",
+            "description": "Feedback dado pelo cliente/visitante"
+          },
+          "visitorNps": {
+            "type": "number",
+            "description": "NPS dado pelo cliente/demonstrador ao serviço prestado"
+          },
+          "agentName": {
+            "type": "string",
+            "description": "Nome do demonstrador. Se houver um vinculado à visita."
+          },
+          "agentPhone": {
+            "type": "string",
+            "description": "Telefone (whatsapp) do demonstrador. Se houver um vinculado à visita",
+            "format": "E.164"
+          }
+        },
+        "required": [
+          "id",
+          "visitType",
+          "status",
+          "acceptableBy",
+          "acceptableByAgentGroup",
+          "acceptableByAgentGroupDeadline",
+          "isHidden",
+          "propertyCode",
+          "visitorName",
+          "visitorEmail",
+          "visitorPhone",
+          "createdByUserEmail",
+          "responsibleUserEmail",
+          "responsibleAgency",
+          "scheduledAt",
+          "briefing",
+          "keyLocation",
+          "keyLocationAddress",
+          "companionType",
+          "companionName",
+          "companionWhatsappNumber",
+          "scheduleSourceInputData",
+          "cancelReason",
+          "agentVisitNotes",
+          "agentEvaluationUrl",
+          "agentEvaluationFormResponse",
+          "visitorEvaluationUrl",
+          "visitorVisitNotes",
+          "visitorNps"
+        ]
+      },
       "MakeVisitVisibleOutputDto": {
         "type": "object",
         "properties": {
